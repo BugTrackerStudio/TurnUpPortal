@@ -65,6 +65,7 @@ public class Program
         IWebElement typeCodeDropDown = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//span[text()='select']"));
         //IWebElement typeCodeDropDown = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[2]/span"));
         typeCodeDropDown.Click();
+        Thread.Sleep(2000);
 
         //IWebElement timeOption = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//span[text()='Time']"));
         IWebElement timeOption = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
@@ -81,7 +82,7 @@ public class Program
         //Type price into the price textbox
         //Note:- the class might have multiple values (like k-formatted-value k-input).to avoid exact match problems using contains()
         IWebElement priceTagOverlap = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//input[contains(@class,'k-formatted-value')]"));
-
+        
         //IWebElement priceTagOverlap = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//input[@class='k-formatted-value k-input']"));
 
         //IWebElement priceTagOverlap = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
@@ -93,9 +94,10 @@ public class Program
         //Click on Save Button
         IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
         saveButton.Click();
+        Thread.Sleep(5000);
 
         //check if the time record has been created successfully
-        IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+        /*IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
         goToLastPageButton.Click();
         Thread.Sleep(3000);
 
@@ -108,7 +110,105 @@ public class Program
         else
         {
             Console.WriteLine("New Time record has not been created!");
+        }*/
+
+        //edit a time record
+
+        //click on Edit button
+        IWebElement editButton = driver.FindElement(By.XPath("//a[contains(@class,'k-grid-Edit')]"));
+        //IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[1]/td[5]/a[1]"));
+        editButton.Click();
+        Thread.Sleep(2000);
+
+        /*//edit a Time or Material Record Dropdown menu
+        IWebElement editTypeCodeDropDown = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//span[text()='select']"));
+        editTypeCodeDropDown.Click();
+
+        IWebElement editTimeOption = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
+        editTimeOption.Click();*/
+
+        /*IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
+
+        // Read the currently selected value
+        string currentValue = typeDropdown.Text;
+        Console.WriteLine("Current selected value: " + currentValue);
+
+        // Logic: swap Time and Material
+        if (currentValue == "Time")
+        {
+            Console.WriteLine("Time is selected → change to Material");
+
+            // Click the dropdown to open
+            typeDropdown.Click();
+            Thread.Sleep(1000);
+
+            // Select Material
+            IWebElement materialOption = driver.FindElement(By.XPath("//li[text()='Material']"));
+            materialOption.Click();
         }
+        else
+        {
+            Console.WriteLine("Material is selected → change to Time");
+
+            // Click the dropdown to open
+            typeDropdown.Click();
+            Thread.Sleep(1000);
+            // Select Time
+            IWebElement editTimeOption = driver.FindElement(By.XPath("//li[text()='Time']"));
+            editTimeOption.Click();
+        }
+
+        Thread.Sleep(3000); // Wait for selection to register*/
+
+        IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
+        string currentValue = typeDropdown.Text;
+        Console.WriteLine("Current selected value: " + currentValue);
+
+        // Determine the target value
+        string targetValue = (currentValue == "Time") ? "Material" : "Time";
+
+        // Only change if different
+        if (currentValue != targetValue)
+        {
+            typeDropdown.Click(); 
+            Thread.Sleep(1500);   
+
+            IWebElement optionToSelect = driver.FindElement(By.XPath($"//li[text()='{targetValue}']"));
+            optionToSelect.Click();
+            Console.WriteLine("Updated selected value: " + targetValue);
+
+            Thread.Sleep(2500);   
+        }
+        else
+        {
+            Console.WriteLine("Dropdown already has the target value. No change needed.");
+            Thread.Sleep(1000);   
+        }
+
+        //edit code into codeTextBox
+        IWebElement editCodeTextBox = driver.FindElement(By.Id("Code"));
+        editCodeTextBox.Clear();
+        editCodeTextBox.SendKeys("Edit TA Kruti");
+        Thread.Sleep(2000);
+
+        //edit Description into Description Textbox
+        IWebElement editDescriptionTextBox = driver.FindElement(By.Id("Description"));
+        editDescriptionTextBox.Clear();
+        editDescriptionTextBox.SendKeys("This is a Edit description");
+        Thread.Sleep(2000);
+
+        //Edit price into the price textbox
+        /*IWebElement editPriceTagOverlap = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
+        editPriceTagOverlap.Click();
+
+        IWebElement editPriceTextBox = driver.FindElement(By.Id("Price"));
+        editPriceTextBox.Clear();
+        editPriceTextBox.SendKeys("120");*/
+
+        //Click on Save Button
+        IWebElement editSaveButton = driver.FindElement(By.Id("SaveButton"));
+        editSaveButton.Click();
+        Thread.Sleep(2000);
 
     }
 }
