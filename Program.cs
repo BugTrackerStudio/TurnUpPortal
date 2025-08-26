@@ -2,9 +2,9 @@
 using OpenQA.Selenium.Chrome;
 
 public class Program
+{
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
         //Open Chrome Browser
         ChromeOptions options = new ChromeOptions();
         options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
@@ -48,7 +48,7 @@ public class Program
             Console.WriteLine("User has not logged in. Test failed!");
         }
 
-        //Create a Time Record
+        /*********************************Create a Time Record***************************/
 
         //Naviagte to Time and Material Page
         IWebElement administrationTab = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
@@ -82,7 +82,7 @@ public class Program
         //Type price into the price textbox
         //Note:- the class might have multiple values (like k-formatted-value k-input).to avoid exact match problems using contains()
         IWebElement priceTagOverlap = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//input[contains(@class,'k-formatted-value')]"));
-        
+
         //IWebElement priceTagOverlap = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//input[@class='k-formatted-value k-input']"));
 
         //IWebElement priceTagOverlap = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
@@ -96,24 +96,25 @@ public class Program
         saveButton.Click();
         Thread.Sleep(5000);
 
+        /******Last Page check the Record has been Successfully Created****/
         //check if the time record has been created successfully
-        /*IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+        IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
         goToLastPageButton.Click();
         Thread.Sleep(3000);
 
         IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-        if(newCode.Text == "TA Programme Kruti")
+        if (newCode.Text == "TA Programme Kruti")
         {
             Console.WriteLine("Time record created successfully!");
         }
         else
         {
             Console.WriteLine("New Time record has not been created!");
-        }*/
+        }
 
 
-        //edit a time record
+        /****************************Edit a Time Record*******************************/
 
         //click on Edit button
         //IWebElement editButton = driver.FindElement(By.XPath("//a[contains(@class,'k-grid-Edit')]"));
@@ -128,42 +129,8 @@ public class Program
         IWebElement editTimeOption = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
         editTimeOption.Click();
 
-        /*IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
-
-        // Read the currently selected value
-        string currentValue = typeDropdown.Text;
-        Console.WriteLine("Current selected value: " + currentValue);
-
-        // Logic: swap Time and Material
-        if (currentValue == "Time")
-        {
-            Console.WriteLine("Time is selected → change to Material");
-
-            // Click the dropdown to open
-            typeDropdown.Click();
-            Thread.Sleep(1000);
-
-            // Select Material
-            IWebElement materialOption = driver.FindElement(By.XPath("//li[text()='Material']"));
-            materialOption.Click();
-        }
-        else
-        {
-            Console.WriteLine("Material is selected → change to Time");
-
-            // Click the dropdown to open
-            typeDropdown.Click();
-            Thread.Sleep(1000);
-            // Select Time
-            IWebElement editTimeOption = driver.FindElement(By.XPath("//li[text()='Time']"));
-            editTimeOption.Click();
-        }
-
-        Thread.Sleep(3000); // Wait for selection to register*/
-
-        /*
-         * Final logic 
-         * IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
+        //Not Done: Final logic 
+        IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
         string currentValue = typeDropdown.Text;
         Console.WriteLine("Current selected value: " + currentValue);
 
@@ -186,7 +153,7 @@ public class Program
         {
             Console.WriteLine("Dropdown already has the target value. No change needed.");
             Thread.Sleep(1000);
-        } */
+        }
 
         //edit code into codeTextBox
         IWebElement editCodeTextBox = driver.FindElement(By.Id("Code"));
@@ -200,7 +167,7 @@ public class Program
         editDescriptionTextBox.SendKeys("This is a Edit description");
         Thread.Sleep(2000);
 
-        //Edit price into the price textbox
+        //Not Done Edit price into the price textbox
         /*IWebElement editPriceTagOverlap = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
         editPriceTagOverlap.Click();
 
@@ -209,13 +176,13 @@ public class Program
         editPriceTextBox.SendKeys("120");*/
 
         //Click on Save Button
+        //Click on Save Button
+        //Click on Save Button
         IWebElement editSaveButton = driver.FindElement(By.Id("SaveButton"));
         editSaveButton.Click();
         Thread.Sleep(2000);
 
-
-
-        //Delete Time Record 
+        /************************************Delete Time Record**************************/
 
         //Navigate to the last page of grid 
         IWebElement llastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
