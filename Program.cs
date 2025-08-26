@@ -112,20 +112,21 @@ public class Program
             Console.WriteLine("New Time record has not been created!");
         }*/
 
+
         //edit a time record
 
         //click on Edit button
-        IWebElement editButton = driver.FindElement(By.XPath("//a[contains(@class,'k-grid-Edit')]"));
-        //IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[1]/td[5]/a[1]"));
+        //IWebElement editButton = driver.FindElement(By.XPath("//a[contains(@class,'k-grid-Edit')]"));
+        IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[1]/td[5]/a[1]"));
         editButton.Click();
         Thread.Sleep(2000);
 
-        /*//edit a Time or Material Record Dropdown menu
+        //edit a Time or Material Record Dropdown menu
         IWebElement editTypeCodeDropDown = driver.FindElement(By.XPath("//form[@id='TimeMaterialEditForm']//span[text()='select']"));
         editTypeCodeDropDown.Click();
 
         IWebElement editTimeOption = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
-        editTimeOption.Click();*/
+        editTimeOption.Click();
 
         /*IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
 
@@ -160,7 +161,9 @@ public class Program
 
         Thread.Sleep(3000); // Wait for selection to register*/
 
-        IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
+        /*
+         * Final logic 
+         * IWebElement typeDropdown = driver.FindElement(By.XPath("//span[@class='k-input']"));
         string currentValue = typeDropdown.Text;
         Console.WriteLine("Current selected value: " + currentValue);
 
@@ -170,20 +173,20 @@ public class Program
         // Only change if different
         if (currentValue != targetValue)
         {
-            typeDropdown.Click(); 
-            Thread.Sleep(1500);   
+            typeDropdown.Click();
+            Thread.Sleep(1500);
 
             IWebElement optionToSelect = driver.FindElement(By.XPath($"//li[text()='{targetValue}']"));
             optionToSelect.Click();
             Console.WriteLine("Updated selected value: " + targetValue);
 
-            Thread.Sleep(2500);   
+            Thread.Sleep(2500);
         }
         else
         {
             Console.WriteLine("Dropdown already has the target value. No change needed.");
-            Thread.Sleep(1000);   
-        }
+            Thread.Sleep(1000);
+        } */
 
         //edit code into codeTextBox
         IWebElement editCodeTextBox = driver.FindElement(By.Id("Code"));
@@ -210,5 +213,42 @@ public class Program
         editSaveButton.Click();
         Thread.Sleep(2000);
 
+
+
+        //Delete Time Record 
+
+        //Navigate to the last page of grid 
+        IWebElement llastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+        llastPageButton.Click();
+        Thread.Sleep(3000);
+
+        //click delete button of the last row
+        IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
+        deleteButton.Click();
+        Thread.Sleep(1500);
+
+        //Click OK to delete
+        //Handle the alert
+        driver.SwitchTo().Alert().Accept();
+        Thread.Sleep(3000);
+
+        //Refresh the page
+        driver.Navigate().Refresh();
+        Thread.Sleep(4000);
+
+        //Check if the record is deleted (Go to last page again)
+        IWebElement lastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+        lastPageButton.Click();
+
+        IWebElement deletedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+
+        if (deletedCode.Text != "TA Programme Kruti")
+        {
+            Console.WriteLine("Record deleted successfully");
+        }
+        else
+        {
+            Console.WriteLine("Record has not been delete.");
+        }
     }
 }
