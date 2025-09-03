@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -54,14 +55,15 @@ namespace TurnUpPortal.Pages
 
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            if (newCode.Text == "TA Programme Kruti")
+            Assert.That(newCode.Text == "TA Programme Kruti", "New Time record has not been created!");
+            /*if (newCode.Text == "TA Programme Kruti")
             {
-                Console.WriteLine("Time record created successfully!");
+                Assert.Pass("Time record created successfully!");
             }
             else
             {
-                Console.WriteLine("New Time record has not been created!");
-            }
+                Assert.Fail("New Time record has not been created!");
+            }*/
         }
 
         public void EditTimeRecord(IWebDriver driver)
